@@ -1,0 +1,7 @@
+url-shortener:
+  base-url: https://commons.kapitalbank.az/api
+  short-url-path: /v1/url-shortener/public/
+  static-tokens:
+    - bb: https://birbank.az
+    - bc: https://birkart.az
+    - bk: https://birkart.az
