@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { CommonExceptionFilter } from './error/exception.filter';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -15,7 +16,12 @@ async function bootstrap() {
             transform: true,
         }),
     );
+
     app.useLogger(logger);
+
+    app.setGlobalPrefix('api', { exclude: ['/health'] });
+
+    app.useGlobalFilters(new CommonExceptionFilter());
 
     app.use(bodyParser.json({ limit: '2mb' }));
     app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }));
@@ -25,4 +31,5 @@ async function bootstrap() {
 
     logger.log('App is running on port: ' + port);
 }
+
 bootstrap();
