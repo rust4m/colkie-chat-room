@@ -1,24 +1,8 @@
-url-shortener:
-  base-url: localhost:8080
-  short-url-path: /api/url-shortener/public/
-  static-tokens:
-    - kb: https://kapitalbank.az
-    - bb: https://birbank.az
-    - bc: https://birkart.az
-    - bk: https://birkart.az
-
-commons: https://dev.commons.kapitalbank.az
-commonsUser: dvs
-commonUserPass: 23-dvs!458
 db: postgres
 dbHost: localhost
-dbPassword:
-dbUser: postgres
-encDecSecret: Dmh8hZaZFqs4jDzqodal
+dbPassword: admin123
+dbUser: admin
+
 port: 5432
 redis: redis-master.dvs-infra
-redisDefaultTtl: 2592000
 redisPort: 6379
-throttlerAllowedRequestPerSecond: 60
-throttlerTtlSecond: 3
-expiredUrlsLimit: 100

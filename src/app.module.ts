@@ -5,6 +5,19 @@ import { WinstonLoggingModule } from './logging/winston.logging.module';
 import configuration from './config/configuration';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GlobalModule } from './global/global.module';
+import { UserModule } from './main/user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './main/user/domain/user.entity';
+import { CreateUserTable } from './migrations/user.migration';
+import { GroupModule } from './main/group/group.module';
+import { MessageModule } from './main/message/message.module';
+import { Group } from './main/group/domain/group.entity';
+import { Message } from './main/message/domain/message.entity';
+import { CreateGroupTable } from './migrations/group.migration';
+import { CreateMessageTable } from './migrations/message.migration';
+import { UserGroup } from './main/user-group/domain/user-group.entity';
+import { UserGroupModule } from './main/user-group/user-group.module';
+import { CreateUserGroupTable } from './migrations/user-group.migration';
 
 @Module({
     imports: [
@@ -15,6 +28,32 @@ import { GlobalModule } from './global/global.module';
             load: [configuration],
         }),
         GlobalModule,
+        UserModule,
+        MessageModule,
+        GroupModule,
+        UserGroupModule,
+        TypeOrmModule.forRootAsync({
+            useFactory: (configService: ConfigService) => ({
+                type: 'postgres',
+                host: configService.get<string>('dbHost'),
+                port: +configService.get<number>('port'),
+                username: configService.get<string>('dbUser'),
+                password: configService.get<string>('dbPassword'),
+                database: configService.get<string>('db'),
+                entities: [User, Group, Message, UserGroup],
+                migrations: [
+                    CreateUserTable,
+                    CreateGroupTable,
+                    CreateMessageTable,
+                    CreateUserGroupTable,
+                ],
+                migrationsRun: true,
+                retryAttempts: 3,
+                logging: true,
+                // autoLoadEntities: true,
+            }),
+            inject: [ConfigService],
+        }),
     ],
     controllers: [HealthController],
     providers: [],
