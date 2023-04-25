@@ -5,7 +5,7 @@ import { GroupRequestDto } from './dto/request/group.request.dto';
 import { MessageRequestDto } from './dto/request/message.request.dto';
 import { UserGroupRequestDto } from './dto/request/user-group.request.dto';
 import { UserRequestDto } from './dto/request/user.request.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('chat')
 @Controller('chat')

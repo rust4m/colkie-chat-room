@@ -1,0 +1,8 @@
+db: postgres
+dbHost: localhost
+dbPassword: admin123
+dbUser: admin
+
+port: 5432
+redis: redis-master.dvs-infra
+redisPort: 6379
