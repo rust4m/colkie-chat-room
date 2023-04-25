@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, Unique, CreateDateColumn } from 'typeorm';
+import { Message } from 'src/main/message/domain/message.entity';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserGroup {
@@ -10,4 +11,8 @@ export class UserGroup {
 
     @Column({ type: 'uuid', unique: true, name: 'group_id' })
     groupId?: string;
+
+    @ManyToMany(() => Message, message => message.userGroups)
+    @JoinTable()
+    messsages?: Message[];
 }

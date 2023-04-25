@@ -1,5 +1,4 @@
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
-import { User } from 'src/main/user/domain/user.entity';
 
 export class MessageRequestDto {
     @IsString()
@@ -9,7 +8,7 @@ export class MessageRequestDto {
 
     @IsString()
     @IsNotEmpty()
-    @MaxLength(10)
+    @MaxLength(30)
     readonly subject: string;
 
     @IsString()

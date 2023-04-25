@@ -24,7 +24,7 @@ export class User {
     @OneToMany(() => Message, (message: Message) => message.user)
     messages?: Message[];
 
-    @ManyToMany(() => User, user => user.groups)
+    @ManyToMany(() => Group, group => group.users)
     @JoinTable({
         name: 'user_group',
         joinColumn: { name: 'user_id', referencedColumnName: 'id' },

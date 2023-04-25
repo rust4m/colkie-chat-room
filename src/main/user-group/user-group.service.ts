@@ -16,9 +16,17 @@ export class UserGroupService {
         }
     }
 
-    async findById(id: string): Promise<UserGroup> {
+    async findByGroupId(id: string): Promise<UserGroup[]> {
         try {
-            return await this.userGroupRepository.findById(id);
+            return await this.userGroupRepository.findByGroupId(id);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async findByUserId(id: string): Promise<UserGroup[]> {
+        try {
+            return await this.userGroupRepository.findByUserId(id);
         } catch (error) {
             throw error;
         }

@@ -1,34 +1,45 @@
-// import { MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner } from 'typeorm';
 
-// export class CreateMessageRecipientTable implements MigrationInterface {
-//     name = `CreateMessageRecipientTable${new Date().getTime()}`;
+export class MessageRecipientTable implements MigrationInterface {
+    name = `MessageRecipientTable${new Date().getTime()}`;
 
-//     public async up(queryRunner: QueryRunner): Promise<void> {
-//         await queryRunner.query(
-//             `CREATE TABLE IF NOT EXISTS "message" (
-//                 "id" serial PRIMARY KEY,
-//                 "content" character varying(100) NOT NULL,
-//                 "subject" character varying(100) NOT NULL,
-//                 "prev_message_id" INTEGER NULL,
-//                 "user_id" uuid NOT NULL,
-//                 "created_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT now());`,
-//         );
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(
+            `CREATE TABLE IF NOT EXISTS "message_recipient" (
+                "id" uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+                "user_group_id" uuid NOT NULL, 
+                "message_id" integer NOT NULL,
+                UNIQUE (user_group_id, message_id));
+            `,
+        );
 
-//         await queryRunner.query(
-//             `DO $$
-//                 BEGIN
+        await queryRunner.query(
+            `DO $$
+                BEGIN
 
-//                 BEGIN
-//                     ALTER TABLE "message" ADD CONSTRAINT "message_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-//                 EXCEPTION
-//                     WHEN duplicate_object THEN RAISE NOTICE 'message_fk1 constraint message_fk1 already exists';
-//                 END;
+                BEGIN
+                    ALTER TABLE "message_recipient" ADD CONSTRAINT "user_group_to_message_recipient_fk1" FOREIGN KEY ("user_group_id") REFERENCES "user_group"("id");
+                EXCEPTION
+                    WHEN duplicate_object THEN RAISE NOTICE 'user_group_to_message_recipient constraint already exists';
+                END;
 
-//             END $$;`,
-//         );
-//     }
+            END $$;
+            
+            
+            DO $$
+                BEGIN
 
-//     public async down(queryRunner: QueryRunner): Promise<void> {
-//         await queryRunner.query('drop table message');
-//     }
-// }
+                BEGIN
+                    ALTER TABLE "message_recipient" ADD CONSTRAINT "message_to_message_recipient_fk1" FOREIGN KEY ("message_id") REFERENCES "message"("id");
+                EXCEPTION
+                    WHEN duplicate_object THEN RAISE NOTICE 'message_to_message_recipient constraint already exists';
+                END;
+
+            END $$;`,
+        );
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query('');
+    }
+}

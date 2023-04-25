@@ -21,7 +21,7 @@ export class CreateMessageTable implements MigrationInterface {
                 BEGIN
                     ALTER TABLE "message" ADD CONSTRAINT "message_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
                 EXCEPTION
-                    WHEN duplicate_object THEN RAISE NOTICE 'message_fk1 constraint message_fk1 already exists';
+                    WHEN duplicate_object THEN RAISE NOTICE 'message_fk1 constraint already exists';
                 END;
 
             END $$;`,

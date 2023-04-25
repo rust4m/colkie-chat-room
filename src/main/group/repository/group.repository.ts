@@ -10,14 +10,6 @@ export class GroupRepository {
         private groupModel: Repository<Group>,
     ) {}
 
-    async findById(id: string) {
-        try {
-            return await this.groupModel.findOneBy({ id });
-        } catch (error) {
-            throw error;
-        }
-    }
-
     async create(groupBody: Group) {
         try {
             const group = this.groupModel.create(groupBody);
