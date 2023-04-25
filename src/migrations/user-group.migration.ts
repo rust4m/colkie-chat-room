@@ -20,7 +20,7 @@ export class CreateUserGroupTable implements MigrationInterface {
                 BEGIN
                     ALTER TABLE "user_group" ADD CONSTRAINT "group_to_user_group_fk1" FOREIGN KEY ("group_id") REFERENCES "group"("id");
                 EXCEPTION
-                    WHEN duplicate_object THEN RAISE NOTICE 'group_to_user_group_fk1 constraint group_to_user_group_fk1 already exists';
+                    WHEN duplicate_object THEN RAISE NOTICE 'group_to_user_group_fk1 constraint already exists';
                 END;
 
             END $$;
@@ -32,7 +32,7 @@ export class CreateUserGroupTable implements MigrationInterface {
                 BEGIN
                     ALTER TABLE "user_group" ADD CONSTRAINT "user_to_user_group_fk1" FOREIGN KEY ("user_id") REFERENCES "user"("id");
                 EXCEPTION
-                    WHEN duplicate_object THEN RAISE NOTICE 'user_to_user_group_fk1 constraint user_to_user_group_fk1 already exists';
+                    WHEN duplicate_object THEN RAISE NOTICE 'user_to_user_group_fk1 constraint already exists';
                 END;
 
             END $$;`,

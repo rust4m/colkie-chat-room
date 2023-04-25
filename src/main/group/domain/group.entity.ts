@@ -1,14 +1,5 @@
 import { User } from 'src/main/user/domain/user.entity';
-import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    Index,
-    Unique,
-    CreateDateColumn,
-    JoinTable,
-    ManyToMany,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Group {
@@ -21,6 +12,6 @@ export class Group {
     @Column({ type: 'varchar', unique: true, length: 20 })
     name?: string;
 
-    @ManyToMany(() => User, user => user.groups)
+    @ManyToMany(() => User)
     users?: User[];
 }

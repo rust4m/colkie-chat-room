@@ -18,6 +18,9 @@ import { CreateMessageTable } from './migrations/message.migration';
 import { UserGroup } from './main/user-group/domain/user-group.entity';
 import { UserGroupModule } from './main/user-group/user-group.module';
 import { CreateUserGroupTable } from './migrations/user-group.migration';
+import { MessageRecipient } from './main/message-recipient/domain/message-recipient.entity';
+import { MessageRecipientTable } from './migrations/message-recipient.migration';
+import { ChatModule } from './main/chat/chat.module';
 
 @Module({
     imports: [
@@ -32,6 +35,7 @@ import { CreateUserGroupTable } from './migrations/user-group.migration';
         MessageModule,
         GroupModule,
         UserGroupModule,
+        ChatModule,
         TypeOrmModule.forRootAsync({
             useFactory: (configService: ConfigService) => ({
                 type: 'postgres',
@@ -40,12 +44,13 @@ import { CreateUserGroupTable } from './migrations/user-group.migration';
                 username: configService.get<string>('dbUser'),
                 password: configService.get<string>('dbPassword'),
                 database: configService.get<string>('db'),
-                entities: [User, Group, Message, UserGroup],
+                entities: [User, Group, Message, UserGroup, MessageRecipient],
                 migrations: [
                     CreateUserTable,
                     CreateGroupTable,
                     CreateMessageTable,
                     CreateUserGroupTable,
+                    MessageRecipientTable,
                 ],
                 migrationsRun: true,
                 retryAttempts: 3,

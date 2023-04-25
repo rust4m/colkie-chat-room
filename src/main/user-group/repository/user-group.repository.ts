@@ -10,9 +10,17 @@ export class UserGroupRepository {
         private userGroupModel: Repository<UserGroup>,
     ) {}
 
-    async findById(id: string) {
+    async findByGroupId(groupId: string) {
         try {
-            return await this.userGroupModel.findOneBy({ id });
+            return await this.userGroupModel.findBy({ groupId });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async findByUserId(id: string) {
+        try {
+            return await this.userGroupModel.find({ where: { userId: id } });
         } catch (error) {
             throw error;
         }

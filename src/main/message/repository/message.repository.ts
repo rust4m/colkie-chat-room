@@ -7,21 +7,32 @@ import { Message } from '../domain/message.entity';
 export class MessageRepository {
     constructor(
         @InjectRepository(Message)
-        private groupModel: Repository<Message>,
+        private messageModel: Repository<Message>,
     ) {}
 
-    async findById(id: number) {
+    async findByUserId(id: string) {
         try {
-            return await this.groupModel.findOneBy({ id });
+            return await this.messageModel.findOne({
+                where: { user: { id } },
+                order: { id: 'DESC' },
+            });
         } catch (error) {
             throw error;
         }
     }
 
-    async create(groupBody: Message) {
+    async findById(id: number) {
         try {
-            const group = this.groupModel.create(groupBody);
-            return await this.groupModel.save(group);
+            return await this.messageModel.findOneBy({ id });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async create(messageBody: Message) {
+        try {
+            const group = this.messageModel.create(messageBody);
+            return await this.messageModel.save(group);
         } catch (error) {
             throw error;
         }

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UserRepository } from './repository/user.repository';
 import { User } from './domain/user.entity';
-import { Group } from '../group/domain/group.entity';
+import { UserRequestDto } from '../chat/dto/request/user.request.dto';
 
 @Injectable()
 export class UserService {
@@ -9,19 +9,8 @@ export class UserService {
 
     constructor(private readonly userRepository: UserRepository) {}
 
-    async create(user: any): Promise<User> {
+    async create(user: UserRequestDto & User): Promise<User> {
         try {
-            const groupIds = [];
-
-            for (let idx = 0; idx < user.groupIds.length; idx++) {
-                const group = new Group();
-
-                group.id = user.groupIds[idx];
-                groupIds.push(group);
-            }
-
-            user.groups = groupIds;
-
             return await this.userRepository.create(user);
         } catch (error) {
             throw error;
