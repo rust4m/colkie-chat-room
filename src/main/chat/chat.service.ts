@@ -23,16 +23,16 @@ export class ChatService {
 
     async createUserWithGroups(user: UserRequestDto & User): Promise<User> {
         try {
-            const groupIds = [] as Group[];
+            const groups = [] as Group[];
 
             for (let idx = 0; idx < user.groupIds.length; idx++) {
                 const group = new Group();
                 group.id = user.groupIds[idx];
 
-                groupIds.push(group);
+                groups.push(group);
             }
 
-            user.groups = groupIds;
+            user.groups = groups;
 
             return await this.userService.create(user);
         } catch (error) {
@@ -101,8 +101,6 @@ export class ChatService {
                     messages.push(message);
                 }
             }
-
-            console.log('messages', messages);
 
             return messages;
         } catch (error) {

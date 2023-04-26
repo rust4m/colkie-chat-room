@@ -3,6 +3,7 @@
 colkie-chat-room is basic group chat application
 
 # Description
+
 colkie-chat-room is basic group chat application, it includes services like creating group, creating user with groups, sending message to a group and retrieving group messages
 
 ## Installation
