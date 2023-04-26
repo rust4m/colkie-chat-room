@@ -3,40 +3,30 @@ services:
         image: postgres:14.7
         restart: always
         environment:
-            POSTGRES_DB: postgres
-            POSTGRES_USER: admin
-            POSTGRES_PASSWORD: admin123
+            POSTGRES_DB: ${db}
+            POSTGRES_USER: ${dbUser}
+            POSTGRES_PASSWORD: ${dbPassword}
         ports:
             - '5432:5432'
         # network_mode: 'host'
         # volumes:
         #     - ./database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql
-    # app:
-    #     build:
-    #         dockerfile: Dockerfile
-    #         context: .
-    #         # Only will build development stage from our dockerfile
-    #         target: development
-    #     # env_file:
-    #     #     - .env
-    #     # volumes:
-    #     #   - .:/usr/src/app
-    #     # # Run in dev Mode: npm run start:dev
-    #     command: npm run start:debug
-    #     ports:
-    #         - 3000:3000
-    #     depends_on:
-    #         - postgres
-
-    # pgadmin:
-    #   container_name: pgadmin4_container
-    #   image: dpage/pgadmin4
-    #   restart: always
-    #   environment:
-    #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
-    #     PGADMIN_DEFAULT_PASSWORD: root
-    #   ports:
-    #     - '5050:80'
+    app:
+        build:
+            dockerfile: Dockerfile
+            context: .
+            # Only will build development stage from our dockerfile
+            target: development
+        # env_file:
+        #     - .env
+        # volumes:
+        #   - .:/usr/src/app
+        # # Run in dev Mode: npm run start:dev
+        command: npm run dev
+        ports:
+            - 3000:3000
+        depends_on:
+            - postgres
 volumes:
     docker-nest-postgres:
     redis:
